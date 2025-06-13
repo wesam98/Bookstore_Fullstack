@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+      <!-- font awesome cdn link -->
+      <link rel="Stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+      <!-- use bootstrap as css style-->
+      <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1 class="display-4 text-center">
+        <i class="fas fa-shopping-cart text-success"></i> Browse <span class="text-success">Books</span>
+      </h1>
+      <div class="row mt-5" id="book-list">
+            <!-- Books will be displayed here by JS -->
+      </div>
+
+     <!-- Cart button -->
+     <div class="text-center mt-3">
+      <button id="view-cart" class="btn btn-primary">View Cart</button>
+     </div>
+    </div>
+
+    <script src="buyer.js">
+     async function loadBooks() {
+    const response = await fetch('http://localhost:5000/books');
+    const books = await response.json();
+    const booksList = document.getElementById('books-list');
+    booksList.innerHTML = books.map(book =>
+      `<div class="card mb-2 p-2">
+        <h5>${book.title}</h5>
+        <p>Author: ${book.author}</p>
+        <p>Price: ${book.price}</p>
+      </div>`
+    ).join('');
+  }
+    loadBooks();
+
+    </script>
+
+ </body>
+ </html>

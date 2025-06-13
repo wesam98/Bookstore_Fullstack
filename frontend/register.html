@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Online Bookstore</title>
+  <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Register for Online Bookstore</h2>
+    <form id="register-form">
+      <div id="error-message"></div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" class="form-control" placeholder="Enter username" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" placeholder="Enter email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+      </div>
+      <div class="form-group">
+        <label >Register as:</label>
+        <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+          <label class="btn btn-outline-primary active flex-fill">
+            <input type="radio" name="role" value="buyer" autocomplete="off" checked> Buyer
+          </label>
+          <label class="btn btn-outline-primary flex-fill">
+            <input type="radio" name="role" value="seller" autocomplete="off"> Seller
+          </label>
+        </div>
+      </div>
+      <button type="button" class="btn btn-success btn-block" id="register-btn">Register</button>
+      <button type="button" class="btn btn-link btn-block" id="login-link">Already have an account? Login</button>
+    </form>
+  </div>
+
+  <script>
+    // Toggle active class for radio button labels
+    document.querySelectorAll('input[name="role"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        document.querySelectorAll('.btn-group-toggle .btn').forEach(function(label) {
+          label.classList.remove('active');
+        });
+        this.parentElement.classList.add('active');
+      });
+    });
+
+    // Handle register button click
+    document.getElementById('register-btn').onclick = async function() {
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const role = document.querySelector('input[name="role"]:checked').value;
+
+      if (!username || !email || !password) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const response = await fetch('http://localhost:5000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password: password,
+          user_role: role
+        })
+      });
+
+      const data = await response.json();
+
+      console.log(response);
+
+      if (response.ok) {
+        alert("Registration successful! Please login.");
+        window.location.href = "index.html";
+      } else {
+        document.getElementById('error-message').textContent = data.error || "Registration failed";      }
+    };
+
+    // Handle login link click
+    document.getElementById('login-link').onclick = function() {
+      window.location.href = "index.html";
+    };
+  </script>
+</body>
+</html>

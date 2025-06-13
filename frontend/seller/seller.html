@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Page</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+      <!-- font awesome cdn link -->
+      <link rel="Stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+      <!-- use bootstrap as css style-->
+      <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+
+  </head>
+  <body>
+    <div class="container" >
+      <h1 class="display-4 text-center">
+        <i class="fas fa-book-open text-primary"></i> Seller <span class="text-primary">Dashboard</span>
+      </h1>
+
+        <form id="js-book-form">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" class="form-control" 
+            placeholder="Enter the book title"
+            required />
+         </div>
+         <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" id="author" class="form-control"  placeholder="Enter the author's name">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" id="description" class="form-control"  placeholder="Enter the book description">
+        </div>
+        
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="text" id="price" class="form-control" placeholder="Enter the book price">
+        </div>
+
+
+        <input type="submit" value="Add Book" class="btn btn-primary btn-block" >
+      </form>
+
+      <div class="container mt-5">
+      <h4><span class="text-primary">Your Books</span></h4>
+      <div id="card-body" class="row d-flex justify-content-start">
+        <!-- Book cards will be inserted here dynamically -->
+      </div>
+    
+    </div>
+    <script src="seller.js"></script>
+
+
+
+  </body>
+</html>

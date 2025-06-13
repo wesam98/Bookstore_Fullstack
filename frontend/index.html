@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Online Bookstore</title>
+  <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Login to Online Bookstore</h2>
+
+    <form id="login-form">
+      <div class="form-group">
+        <label for="username"> Email</label>
+        <input type="text" id="username" class="form-control" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+      </div>
+
+      <button type="button" class="btn btn-primary btn-block" id = "login-id">Login </button>
+      
+      <button type="button" class="btn btn-primary btn-block" id = "register">register </button>
+      
+      <div class="form-group">
+      <div id="error-message" class="text-danger mb-2"></div>
+      <label >Login as:</label>
+      <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+        <label class="btn btn-outline-primary active flex-fill">
+          <input type="radio" name="role" value="buyer" autocomplete="off" checked> Buyer
+        </label>
+        <label class="btn btn-outline-primary flex-fill">
+          <input type="radio" name="role" value="seller" autocomplete="off"> Seller
+        </label>
+    </div>
+</div>
+</div>
+    </form>
+  </div>
+
+  
+  <script>
+    // Toggle active class for radio button labels
+  document.querySelectorAll('input[name="role"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      document.querySelectorAll('.btn-group-toggle .btn').forEach(function(label) {
+        label.classList.remove('active');
+      });
+      this.parentElement.classList.add('active');
+    });
+  });
+
+    // Handle login button click
+  document.getElementById('login-id').onclick = async function() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const role = document.querySelector('input[name="role"]:checked').value;
+
+    if (!username || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Send login request to backend
+    const response = await fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: username, // or username, depending on your backend
+        password: password,
+        user_role: role
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      // Save user info if needed
+      localStorage.setItem("userRole", role);
+      localStorage.setItem("userId", data.user_id);
+      // Redirect to the appropriate dashboard
+      window.location.href = role + "/" + role + ".html";
+    } else {
+        document.getElementById('error-message').textContent = data.error || "Registration failed";
+
+    //  alert(data.error || "Login failed");
+    }
+  };
+   // Handle register button click
+  document.getElementById('register').onclick = function() {
+    window.location.href = "register.html";
+  };
+
+  </script>
+</body>
+</html>

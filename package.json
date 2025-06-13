@@ -1,0 +1,10 @@
+{
+  "name": "book_store",
+  "version": "1.0.0",
+  "description": "Book Store Project",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install-deps": "npm install && cd backend && npm install"
+  }
+}
